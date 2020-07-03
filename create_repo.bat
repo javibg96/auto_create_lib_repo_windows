@@ -1,0 +1,1 @@
+cmd /C "C:\Users\your_user_name\where_you_put_this_repo\auto_create_lib_repo_windows\comandos.cmd %1"
