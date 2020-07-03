@@ -4,7 +4,12 @@
 import sys
 import os
 
-nombre_repo = str(sys.argv[1])
 
-print(nombre_repo)
+def create():
+    nombre_repo = str(sys.argv[1])
 
+    print(nombre_repo)
+
+
+if __name__ == "__main__":
+    create()
