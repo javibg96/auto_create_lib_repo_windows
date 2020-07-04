@@ -130,5 +130,5 @@ dmypy.json
 .pyre/
 
 # Creds and base path
-# git_creds.yml
-# comandos.cmd
+git_creds.yml
+comandos.cmd
