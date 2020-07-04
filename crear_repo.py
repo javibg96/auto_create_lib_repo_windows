@@ -13,15 +13,12 @@ from github import Github
 
 def create():
     nombre_repo = str(sys.argv[1])
-    print(nombre_repo)
     cfg = get_cfg()
-    print(cfg)
     base_path = cfg["ruta_base"]
-    username = cfg["username"]
-    password = cfg["password"]
-    user = Github(username, password).get_user()
-    print(user)
-    path = base_path + nombre_repo + "/src"
+    token = cfg["pers_token"]
+    user = Github(token).get_user()
+    repo = user.create_repo(nombre_repo)
+    path = base_path + nombre_repo + "\\src"
 
     try:  # si la carpeta existe almacena ahi, sino la crea, valido para almacenar en local
         if not os.path.exists(os.path.dirname(path)):
@@ -39,7 +36,7 @@ def create():
         raise
 
 
-def get_cfg():
+def get_cfg(ruta_base=None):
     """Parse the YAML config"""
     pattern = re.compile(r"\$\{(.*)\}(.*)$")
     yaml.add_implicit_resolver("!env", pattern)
@@ -51,7 +48,8 @@ def get_cfg():
         return os.environ[env_var] + remaining_path
 
     yaml.add_constructor('!env', env_constructor)
-    with open("git_creds.yml") as config:
+    ruta_cfg = ruta_base + "git_creds.yml"
+    with open(ruta_cfg) as config:
         try:
             cfg = yaml.load(config, Loader=yaml.Loader)
         except yaml.YAMLError:
