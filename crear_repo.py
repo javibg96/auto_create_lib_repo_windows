@@ -8,18 +8,21 @@ import gc
 import re
 from ruamel import yaml
 import logging
+from github import Github
 
 
 def create():
     nombre_repo = str(sys.argv[1])
-
     print(nombre_repo)
     cfg = get_cfg()
     print(cfg)
     base_path = cfg["ruta_base"]
     username = cfg["username"]
     password = cfg["password"]
+    user = Github(username, password).get_user()
+    print(user)
     path = base_path + nombre_repo + "/src"
+
     try:  # si la carpeta existe almacena ahi, sino la crea, valido para almacenar en local
         if not os.path.exists(os.path.dirname(path)):
             try:
@@ -61,23 +64,3 @@ if __name__ == "__main__":
     create()
 
 
-class ConfigLoader:
-    def __init__(self):
-        self._cfg = value
-        self._metadata = value
-
-    @property
-    def cfg(self):
-        return self._cfg
-
-    @cfg.setter
-    def cfg(self, value):
-        pass
-
-    @property
-    def metadata(self):
-        return self._metadata
-
-    @metadata.setter
-    def metadata(self, value):
-        pass
