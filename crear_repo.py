@@ -14,29 +14,12 @@ from github import Github
 def create():
     nombre_repo = str(sys.argv[1])
     cfg = get_cfg()
-    base_path = cfg["ruta_base"]
     token = cfg["pers_token"]
     user = Github(token).get_user()
-    repo = user.create_repo(nombre_repo)
-    path = base_path + nombre_repo + "\\src"
-
-    try:  # si la carpeta existe almacena ahi, sino la crea, valido para almacenar en local
-        if not os.path.exists(os.path.dirname(path)):
-            try:
-                os.makedirs(os.path.dirname(path))
-            except OSError as exc:  # Guard against race condition
-                if exc.errno != errno.EEXIST:
-                    logging.error(
-                        "specified path is not possible to be created")
-                    raise
-        gc.collect()
-        logging.info("\nCreated " + path)
-    except:  # try catch en caso de que no funcione el almacenamiento
-        logging.error(f"Error creating repo in path {path}")
-        raise
+    user.create_repo(nombre_repo)
 
 
-def get_cfg(ruta_base=None):
+def get_cfg(ruta_base=""):
     """Parse the YAML config"""
     pattern = re.compile(r"\$\{(.*)\}(.*)$")
     yaml.add_implicit_resolver("!env", pattern)

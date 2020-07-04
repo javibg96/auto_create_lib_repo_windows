@@ -5,7 +5,7 @@ from crear_repo import get_cfg
 
 def rellenar():
     nombre_repo = str(sys.argv[1])
-    cfg = get_cfg("C:\\Users\\blasc\\PycharmProjects\\auto_create_lib_repo_windows\\")
+    cfg = get_cfg()
     base_path = cfg["ruta_base"]
     git_ignore = base_path + nombre_repo + "\\.gitignore"
     setup = base_path + nombre_repo + "\\setup.py"
